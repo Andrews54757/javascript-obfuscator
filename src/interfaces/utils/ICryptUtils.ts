@@ -18,4 +18,11 @@ export interface ICryptUtils {
      * @returns {string}
      */
     rc4 (string: string, key: string): string;
+
+    /**
+     * @param key
+     * @param string
+     * @returns {string}
+     */
+    hash (toHash: string, hashEntropy: number): number;
 }

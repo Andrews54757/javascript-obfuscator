@@ -52,6 +52,7 @@ export const DEFAULT_PRESET: TInputOptions = Object.freeze({
         StringArrayIndexesType.HexadecimalNumber
     ],
     stringArrayIndexShift: true,
+    stringArraySelfDefending: false,
     stringArrayWrappersChainedCalls: true,
     stringArrayWrappersCount: 1,
     stringArrayWrappersParametersMaxCount: 2,

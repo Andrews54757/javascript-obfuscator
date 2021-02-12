@@ -17,7 +17,27 @@ export interface IStringArrayStorage extends IMapStorage <string, IStringArraySt
     /**
      * @returns {string}
      */
+    getHashName (): string;
+
+    /**
+     * @returns {number}
+     */
+    getHash (): number;
+
+    /**
+     * @returns {number}
+     */
+    getHashEntropy (): number;
+
+    /**
+     * @returns {string}
+     */
     getStorageName (): string;
+
+    /**
+     * @returns {number}
+     */
+    getSecretValue (): number;
 
     /**
      * @param {TStringArrayEncoding | null} stringArrayEncoding

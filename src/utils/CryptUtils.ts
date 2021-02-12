@@ -11,6 +11,7 @@ import { Utils } from './Utils';
 
 @injectable()
 export class CryptUtils implements ICryptUtils {
+
     /**
      * @type {string}
      */
@@ -146,4 +147,16 @@ export class CryptUtils implements ICryptUtils {
 
         return result;
     }
+
+    public hash (toHash: string, hashEntropy: number): number {
+        let hash: number = 0;
+        for (let i: number = 0; i < toHash.length; i++) { // hash function from here: https://stackoverflow.com/questions/6122571/simple-non-secure-hash-function-for-javascript
+            const c: number = toHash.charCodeAt(i) ^ hashEntropy;
+            hash = ((hash << 5) - hash) + c;
+            hash = hash & hash; // convert to 32bit integer
+        }
+
+        return hash;
+    }
+    
 }

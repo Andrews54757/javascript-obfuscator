@@ -250,6 +250,12 @@ export class Options implements IOptions {
      * @type {boolean}
      */
     @IsBoolean()
+    public readonly stringArraySelfDefending!: boolean;
+
+    /**
+     * @type {boolean}
+     */
+    @IsBoolean()
     public readonly shuffleStringArray!: boolean;
 
     /**

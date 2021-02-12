@@ -95,6 +95,21 @@ export class StringArrayStorage extends MapStorage <`${string}-${TStringArrayEnc
     private stringArrayStorageName!: string;
 
     /**
+     * @type {string}
+     */
+    private stringArrayHashName!: string;
+
+    /**
+     * @type {string}
+     */
+    private hashEntropy!: number;
+
+    /**
+     * @type {string}
+     */
+    private secretValue!: number;
+
+    /**
      * @type {Map<TStringArrayEncoding | null, string>}
      */
     private readonly stringArrayStorageCallsWrapperNamesMap: Map<TStringArrayEncoding | null, string> = new Map();
@@ -185,6 +200,54 @@ export class StringArrayStorage extends MapStorage <`${string}-${TStringArrayEnc
         }
 
         return this.stringArrayStorageName;
+    }
+
+    /**
+     * @returns {string}
+     */
+    public getHashName (): string {
+        if (!this.stringArrayHashName) {
+            this.stringArrayHashName = this.identifierNamesGenerator
+                .generateForGlobalScope(StringArrayStorage.stringArrayNameLength);
+        }
+
+        return this.stringArrayHashName;
+    }
+
+    /**
+     * @returns {string}
+     */
+    public getHashEntropy (): number {
+        if (!this.hashEntropy) {
+            this.hashEntropy = this.randomGenerator.getRandomInteger(1, 255);
+        }
+
+        return this.hashEntropy;
+    }
+
+    /**
+     * @returns {number}
+     */
+    public getHash (): number {
+        const hashEntropy = this.getHashEntropy();
+        const toHash: string = Array
+        .from(this.getStorage().values())
+        .map((stringArrayStorageItemData: IStringArrayStorageItemData): string => {
+            return stringArrayStorageItemData.encodedValue;
+        }).join(',');
+
+        return this.cryptUtilsStringArray.hash(toHash, hashEntropy);
+    }
+
+    /**
+     * @returns {number}
+     */
+    public getSecretValue (): number {
+        if (!this.secretValue) {
+            this.secretValue = this.randomGenerator.getRandomInteger(1, 1e6);
+        }
+        
+        return this.secretValue;
     }
 
     /**

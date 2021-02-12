@@ -14,7 +14,6 @@ import { INodeTransformersRunner } from '../../interfaces/node-transformers/INod
 import { INumberNumericalExpressionAnalyzer } from '../../interfaces/analyzers/number-numerical-expression-analyzer/INumberNumericalExpressionAnalyzer';
 import { IOptions } from '../../interfaces/options/IOptions';
 import { IRandomGenerator } from '../../interfaces/utils/IRandomGenerator';
-import { IStringArrayStorage } from '../../interfaces/storages/string-array-transformers/IStringArrayStorage';
 import { IStringArrayStorageAnalyzer } from '../../interfaces/analyzers/string-array-storage-analyzer/IStringArrayStorageAnalyzer';
 import { IVisitor } from '../../interfaces/node-transformers/IVisitor';
 
@@ -57,11 +56,6 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
     private readonly numberNumericalExpressionAnalyzer: INumberNumericalExpressionAnalyzer;
 
     /**
-     * @type {IStringArrayStorage}
-     */
-    private readonly stringArrayStorage: IStringArrayStorage;
-
-    /**
      * @type {IStringArrayStorageAnalyzer}
      */
     private readonly stringArrayStorageAnalyzer: IStringArrayStorageAnalyzer;
@@ -89,7 +83,6 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
         @inject(ServiceIdentifiers.IRandomGenerator) randomGenerator: IRandomGenerator,
         @inject(ServiceIdentifiers.IOptions) options: IOptions,
         @inject(ServiceIdentifiers.INodeTransformersRunner) transformersRunner: INodeTransformersRunner,
-        @inject(ServiceIdentifiers.IStringArrayStorage) stringArrayStorage: IStringArrayStorage,
         @inject(ServiceIdentifiers.IStringArrayStorageAnalyzer) stringArrayStorageAnalyzer: IStringArrayStorageAnalyzer,
         @inject(ServiceIdentifiers.Factory__ICustomCodeHelper) customCodeHelperFactory: TCustomCodeHelperFactory,
         @inject(ServiceIdentifiers.INumberNumericalExpressionAnalyzer)
@@ -97,7 +90,6 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
     ) {
         super(randomGenerator, options);
 
-        this.stringArrayStorage = stringArrayStorage;
         this.stringArrayStorageAnalyzer = stringArrayStorageAnalyzer;
         this.transformersRunner = transformersRunner;
         this.customCodeHelperFactory = customCodeHelperFactory;
@@ -249,7 +241,6 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
             this.customCodeHelperFactory(CustomCodeHelper.StringArrayRotateFunction);
 
         stringArrayRotateFunctionCodeHelper.initialize(
-            this.stringArrayStorage.getStorageName(),
             comparisonValue,
             comparisonExpressionNode
         );

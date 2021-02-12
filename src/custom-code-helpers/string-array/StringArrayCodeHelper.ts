@@ -18,6 +18,7 @@ import { StringArrayTemplate } from './templates/string-array/StringArrayTemplat
 import { AbstractCustomCodeHelper } from '../AbstractCustomCodeHelper';
 import { NodeUtils } from '../../node/NodeUtils';
 import { StringUtils } from '../../utils/StringUtils';
+import { SelfDefendStringArrayTemplate } from './templates/string-array/SelfDefendStringArrayTemplate';
 
 @injectable()
 export class StringArrayCodeHelper extends AbstractCustomCodeHelper {
@@ -81,9 +82,26 @@ export class StringArrayCodeHelper extends AbstractCustomCodeHelper {
      * @returns {string}
      */
     protected getCodeHelperTemplate (): string {
-        return this.customCodeHelperFormatter.formatTemplate(StringArrayTemplate(), {
+        let selfDefendingCode: string = '';
+      
+
+        if (this.options.stringArraySelfDefending) {
+            selfDefendingCode = this.customCodeHelperFormatter.formatTemplate(SelfDefendStringArrayTemplate(
+                this.randomGenerator,
+                !this.options.rotateStringArray,
+                this.stringArrayStorage.getHash(),
+                this.stringArrayStorage.getHashEntropy(),
+                this.stringArrayStorage.getSecretValue()
+            ), {
+                stringArrayName: this.stringArrayName,
+                stringHashName: this.stringArrayStorage.getHashName()
+            });
+        }
+
+        return this.customCodeHelperFormatter.formatTemplate(StringArrayTemplate(this.options.stringArraySelfDefending), {
             stringArrayName: this.stringArrayName,
-            stringArrayStorageItems: this.getEncodedStringArrayStorageItems()
+            stringArrayStorageItems: this.getEncodedStringArrayStorageItems(),
+            selfDefendingCode: selfDefendingCode
         });
     }
 

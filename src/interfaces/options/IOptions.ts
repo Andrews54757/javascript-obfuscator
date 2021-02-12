@@ -46,6 +46,7 @@ export interface IOptions {
     readonly stringArrayEncoding: TStringArrayEncoding[];
     readonly stringArrayIndexesType: TStringArrayIndexesType[];
     readonly stringArrayIndexShift: boolean;
+    readonly stringArraySelfDefending: boolean;
     readonly stringArrayWrappersChainedCalls: boolean;
     readonly stringArrayWrappersCount: number;
     readonly stringArrayWrappersParametersMaxCount: number;
